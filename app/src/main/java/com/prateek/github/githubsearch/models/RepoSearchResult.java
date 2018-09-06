@@ -1,24 +1,25 @@
 package com.prateek.github.githubsearch.models;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.PagedList;
 
 import java.util.List;
 
 public class RepoSearchResult {
-    private LiveData<List<Repo>> data;
+    private LiveData<PagedList<Repo>> data;
     private LiveData<String> networkErrors;
 
-    public RepoSearchResult(LiveData<List<Repo>> data,LiveData<String> networkErrors){
+    public RepoSearchResult(LiveData<PagedList<Repo>> data, LiveData<String> networkErrors){
 
         this.data=data;
         this.networkErrors=networkErrors;
     }
 
-    public LiveData<List<Repo>> getData() {
+    public LiveData<PagedList<Repo>> getData() {
         return data;
     }
 
-    public void setData(LiveData<List<Repo>> data) {
+    public void setData(LiveData<PagedList<Repo>> data) {
         this.data = data;
     }
 

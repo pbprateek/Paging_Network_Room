@@ -1,5 +1,6 @@
 package com.prateek.github.githubsearch.ui;
 
+import android.arch.paging.PagedListAdapter;
 import android.support.annotation.NonNull;
 import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.util.DiffUtil;
@@ -11,7 +12,7 @@ import android.view.ViewGroup;
 import com.prateek.github.githubsearch.R;
 import com.prateek.github.githubsearch.models.Repo;
 
-public class ReposAdapter extends ListAdapter<Repo,RecyclerView.ViewHolder> {
+public class ReposAdapter extends PagedListAdapter<Repo,RecyclerView.ViewHolder> {
     public ReposAdapter() {
         super(DIFF_CALLBACK);
     }
@@ -26,10 +27,7 @@ public class ReposAdapter extends ListAdapter<Repo,RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Repo repo=getItem(position);
-        if(repo!= null){
             ((RepoViewHolder)holder).bind(repo);
-
-        }
 
     }
 

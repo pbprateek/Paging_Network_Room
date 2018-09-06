@@ -1,6 +1,7 @@
 package com.prateek.github.githubsearch.db;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.DataSource;
 import android.util.Log;
 
 import com.prateek.github.githubsearch.Interfaces.InsertFinished;
@@ -33,7 +34,7 @@ public class GithubRepositoryLocal {
     }
 
 
-    public LiveData<List<Repo>> reposByName(String query){
+    public DataSource.Factory<Integer, Repo> reposByName(String query){
         Log.d("HERE123","reposBynameLocal");
         return repoDao.reposByName("%" + query.replace(' ', '%') + "%");
     }

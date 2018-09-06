@@ -3,6 +3,7 @@ package com.prateek.github.githubsearch;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.arch.paging.PagedList;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
         DividerItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         list.addItemDecoration(decoration);
-        setupScrollListener();
 
 
         initAdapter();
@@ -123,9 +123,9 @@ public class MainActivity extends AppCompatActivity {
         list.setAdapter(adapter);
 
 
-        viewModel.repos.observe(this, new Observer<List<Repo>>() {
+        viewModel.repos.observe(this, new Observer<PagedList<Repo>>() {
             @Override
-            public void onChanged(@Nullable List<Repo> repos) {
+            public void onChanged(@Nullable PagedList<Repo> repos) {
                 Log.d("Activity", "list:"+repos.size());
                 showEmptyList(repos.size()==0);
                 Log.d("HERE123","ReposObserveMain");
@@ -155,26 +155,6 @@ public class MainActivity extends AppCompatActivity {
             emptyList.setVisibility(View.GONE);
             list.setVisibility(View.VISIBLE);
         }
-
-    }
-
-    private void setupScrollListener() {
-        list.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-
-                if(dy!=0) {
-
-                    int totalItemCount = list.getLayoutManager().getItemCount();
-                    int visibleItemCount = list.getLayoutManager().getChildCount();
-                    int lastVisibleItem = ((LinearLayoutManager) list.getLayoutManager()).findLastVisibleItemPosition();
-
-                    viewModel.listScrolled(visibleItemCount, lastVisibleItem, totalItemCount);
-                }
-            }
-        });
 
     }
 }

@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
+import android.arch.paging.PagedList;
 import android.util.Log;
 
 import com.prateek.github.githubsearch.db.GithubRepositoryLocalAndNetwork;
@@ -19,7 +20,7 @@ public class SearchRepositoriesViewModel extends ViewModel {
     private static final int VISIBLE_THRESHOLD = 5;
     private MutableLiveData<String> queryLiveData;
     private LiveData<RepoSearchResult> repoResult;
-    public LiveData<List<Repo>> repos;
+    public LiveData<PagedList<Repo>> repos;
     public LiveData<String> networkErrors;
 
     public SearchRepositoriesViewModel(final GithubRepositoryLocalAndNetwork githubRepositoryLocalAndNetwork) {
@@ -49,9 +50,9 @@ public class SearchRepositoriesViewModel extends ViewModel {
         //what basically a switchmap does inside the hood is that it uses MediatorLiveData and whenever a new source is added it removes
         //the previous source,so users can see only the latest results.(Basically removing connection from old livedata)
         //it removes the observer and adds a new one for us with latest LiveData
-        repos = Transformations.switchMap(repoResult, new Function<RepoSearchResult, LiveData<List<Repo>>>() {
+        repos = Transformations.switchMap(repoResult, new Function<RepoSearchResult, LiveData<PagedList<Repo>>>() {
             @Override
-            public LiveData<List<Repo>> apply(RepoSearchResult input) {
+            public LiveData<PagedList<Repo>> apply(RepoSearchResult input) {
                 Log.d("HERE123","TransformSwitch");
                 return input.getData();
             }
@@ -75,14 +76,7 @@ public class SearchRepositoriesViewModel extends ViewModel {
         queryLiveData.postValue(query);
 
     }
-    public void listScrolled(int visibleItemCount,int lastVisibleItemPosition,int totalItemCount){
-        if (visibleItemCount + lastVisibleItemPosition + VISIBLE_THRESHOLD >= totalItemCount){
-            String immutableQuery=lastQueryValue();
-            if(immutableQuery != null){
-                repositoryLocalAndNetwork.requestMore(immutableQuery);
-            }
-        }
-    }
+
 
 
     /**
