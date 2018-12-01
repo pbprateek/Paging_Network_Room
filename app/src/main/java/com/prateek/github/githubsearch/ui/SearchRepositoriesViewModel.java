@@ -31,6 +31,8 @@ public class SearchRepositoriesViewModel extends ViewModel {
 
         //why use transformation?
         //The transformations aren't calculated unless an observer is observing the returned LiveData object.
+        //And if there is a bridge between view and repository then u need Transformation to access livedata which is 
+        //in repository and u want to access it in view.then use Transformation in viewmodel.
 
 
         //here basically we will get RepoSearchResult based on our query,we are transforming
