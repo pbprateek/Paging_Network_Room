@@ -25,7 +25,7 @@ public class SearchRepositoriesViewModel extends ViewModel {
 
     public SearchRepositoriesViewModel(final GithubRepositoryLocalAndNetwork githubRepositoryLocalAndNetwork) {
         
-        #if u want to use Application Context in ur viewmodel then exten AndroidViewModel instead of ViewModel.
+        //if u want to use Application Context in ur viewmodel then exten AndroidViewModel instead of ViewModel.
 
         this.repositoryLocalAndNetwork = githubRepositoryLocalAndNetwork;
         queryLiveData = new MutableLiveData<String>();
